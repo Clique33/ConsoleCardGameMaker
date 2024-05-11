@@ -10,8 +10,14 @@ import java.util.Arrays;
 import java.util.Objects;
 
 /**
+ * Classe abstrata que representa Cartas. Todos os elementos de jogos nesta
+ * engine devem ser cartas colocadas sobre um Tabuleiro. Assim, todo jogo deve
+ * possuir uma ou mais classes que herdam desta, acrescentando o que for
+ * necessário.
  *
  * @author clique
+ * @see StringColorida
+ * @see Tabuleiro
  */
 public abstract class Carta {
     private StringColorida frente;
@@ -19,14 +25,33 @@ public abstract class Carta {
     private boolean viradaParaCima;
     private int graus;
 
+    /**
+     * Cria uma Carta com a frente dada pela StringColorida passada, cujo verso
+     * possui a mesma quantidade de linhas e cor base Cor.BRANCO_BRANCO. A carta
+     * está virada com a frente para cima.
+     * 
+     * @param frente StringColorida que representa a frente da Carta.
+     * @see StringColorida
+     */
     public Carta(StringColorida frente) {
         this.frente = frente;
-        this.verso = frente.versoDesta("AZUL_CLARO");
+        this.verso = frente.versoDesta("BRANCO_BRANCO");
         graus = 0;
         viradaParaCima = true;
     }
     
-
+    /**
+     * Cria uma Carta com a frente dada pela StringColorida 'frente', e o verso
+     * dado pela StringColorida 'verso'. A carta está virada com a frente para
+     * cima.
+     * 
+     * @param frente StringColorida que representa a frente da Carta.
+     * @param verso StringColorida que representa o verso da Carta.
+     * 
+     * @throws RuntimeException gera um erro caso a frente e o verso não possuam
+     * as mesmas dimensões.
+     * @see StringColorida
+     */
     public Carta(StringColorida frente, StringColorida verso) {
         this(frente);
         if(!Arrays.equals(verso.getDimensao(),frente.getDimensao()))
@@ -34,40 +59,86 @@ public abstract class Carta {
         this.verso = verso;
     }
 
+    /**
+     * Cria uma Carta com a frente dada pela StringColorida 'frente',  o verso
+     * dado pela StringColorida 'verso' e frente ou verso virada para cima, de 
+     * acordo com o valor passado.
+     * 
+     * @param frente StringColorida que representa a frente da Carta.
+     * @param verso StringColorida que representa o verso da Carta.
+     * @param viradaParaCima frente fica para cima, caso true, e verso fica para
+     * cima, caso false.
+     * 
+     * @throws RuntimeException gera um erro caso a frente e o verso não possuam
+     * as mesmas dimensões.
+     * 
+     * @see StringColorida
+     */
     public Carta(StringColorida frente, StringColorida verso, boolean viradaParaCima) {
         this(frente,verso);
         this.viradaParaCima = viradaParaCima;
     }
 
+    /**
+     * Retorna uma cópia da StringColorida da frente desta Carta.
+     * @return uma cópia da StringColorida da frente desta Carta.
+     * 
+     * @see StringColorida
+     */
     public StringColorida getFrente() {
-        return frente;
+        return frente.copia();
     }
 
+    /**
+     * Retorna uma cópia da StringColorida do verso desta Carta.
+     * @return uma cópia da StringColorida do verso desta Carta.
+     * 
+     * @see StringColorida
+     */
     public StringColorida getVerso() {
-        return verso;
+        return frente.copia();
     }
     
+    /**
+     * Retorna uma cópia da StringColorida da face que está para cima desta
+     * Carta.
+     * @return uma cópia da StringColorida da face que está para cima desta
+     * Carta.
+     * 
+     * @see StringColorida
+     */
     public StringColorida getFaceParaCima(){
         if(viradaParaCima)
             return getFrente();
         return getVerso();
     }
 
+    /**
+     * Retorna verdadeiro se a frente desta carta está virada para cima e falso,
+     * caso contrário.
+     * @return verdadeiro se a frente desta carta está virada para cima e falso,
+     * caso contrário.
+     */
     public boolean estaViradaParaCima(){
         return viradaParaCima;
     }
     
+    /**
+     * Inverte a face desta Carta que está virada para cima.
+     */
     public void vira(){
         viradaParaCima = !viradaParaCima;
     }
 
+    /**
+     * Cria uma cópia desta Carta e a retorna.
+     * 
+     * @return uma cópia desta Carta.
+     */
     public Carta copia() {
-        return new Carta(frente, verso, viradaParaCima) {};
+        return new Carta(getFrente(), getVerso(), estaViradaParaCima()) {};
     }
     
-    public void giraCartaParaDireita(){}
-    public void giraCartaParaEsquerda(){}
-
     @Override
     public String toString() {
         if(viradaParaCima)

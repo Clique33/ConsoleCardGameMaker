@@ -1,6 +1,7 @@
 
 import console.Console;
 import console.Tecla;
+import cores.Cor;
 import cores.StringColorida;
 import java.io.IOException;
 import java.io.PrintStream;
@@ -21,6 +22,7 @@ import mecanicas.Tabuleiro;
  */
 class NewClass {
     public static void main(String[] args) throws IOException, InterruptedException {
+        demoCores();
 //        demoCartas();
 //        demoTabuleiro();
     }
@@ -110,4 +112,13 @@ class NewClass {
     static StringColorida espadas = new StringColorida("A  \n"
                                                 +" "+(char)6+" \n"
                                                 +"  A\n", "PRETO", "BRANCO");
+
+    private static void demoCores() {
+        Console.limpaTela();
+        String teste = Console.input(
+                        "Digite o texto a ser colorido com todas as cores 🁎");
+        Console.limpaTela();
+        Cor.testaTodasAsCores(teste);
+        
+    }
 }

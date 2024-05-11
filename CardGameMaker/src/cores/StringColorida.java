@@ -1,7 +1,5 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * fasdfasdfas.
  */
 package cores;
 
@@ -13,8 +11,12 @@ import java.util.List;
 import java.util.Objects;
 
 /**
+ * Classe que representa uma String colorida. Ela permite que tanto a fonte
+ * quanto o fundo sejam coloridos com cores diferentes, desde que apenas utilize
+ * os disponíveis na Enum Cor. Objetos desta classe não colorem o caracter '\n'
  *
  * @author clique
+ * @see cores.Cor
  */
 public class StringColorida {
     private String string;
@@ -22,6 +24,11 @@ public class StringColorida {
     private int largura;
     private int altura;
 
+    /**
+     * Cria uma StringColorida a partir de uma String, com as cores básicas.
+     * 
+     * @param string String sem cor.
+     */
     public StringColorida(String string){
         posicoesColoridas.add(new RangesColoridas(new Range(0,string.length()), Cor.BRANCO, Cor.FUNDO_PRETO));
         this.string = string;
@@ -29,6 +36,16 @@ public class StringColorida {
         altura = -1;
     }    
     
+    /**
+     * Cria uma StringColorida a partir de uma String e com as cores de fonte e 
+     * de fundo passadas.
+     * 
+     * @param string String sem cor a ser colorida.
+     * @param corFonte Cor da fonte. (deve pertencer ao Enum Cor)
+     * @param corFundo Cor do fundo. (deve pertencer ao Enum Cor)
+     * 
+     * @see cores.Cor
+     */
     public StringColorida(String string,Cor corFonte,Cor corFundo){
         this(string);
         String prefixoFundo = "FUNDO_";
@@ -42,6 +59,17 @@ public class StringColorida {
         posicoesColoridas.get(0).corFundo = corFundo;
     }
     
+    /**
+     * Cria uma StringColorida a partir de uma String setando a cor da fonte ou
+     * do fundo apenas.
+     * 
+     * @param string String sem cor a ser colorida.
+     * @param cor Cor a ser colocada no fundo ou na fonte. (deve pertencer ao
+     * Enum Cor)
+     * @param fundo se true, cor é setada no fundo e na fonte, caso contrário.
+     * 
+     * @see cores.Cor
+     */
     public StringColorida(String string,Cor cor, boolean fundo){
         this(string);
         String prefixoFundo = "FUNDO_";
@@ -60,28 +88,83 @@ public class StringColorida {
         
     }
     
+    /**
+     * Cria uma StringColorida a partir de uma String setando a cor da fonte.
+     * 
+     * @param string String sem cor a ser colorida.
+     * @param corFonte Cor da fonte. (deve pertencer ao Enum Cor)
+     * 
+     * @see cores.Cor
+     */    
     public StringColorida(String string,Cor corFonte){
         this(string,corFonte,false);
     }
     
+    /**
+     * Cria uma StringColorida a partir de uma String setando a cor da fonte de
+     * acordo com a String passada.
+     * 
+     * @param string String sem cor a ser colorida.
+     * @param corFonte Cor a ser colocada na fonte. (deve pertencer ao
+     * Enum Cor)
+     * 
+     * @see cores.Cor
+     */
     public StringColorida(String string,String corFonte){
         this(string,Cor.valueOf(corFonte.toUpperCase()));
     }
     
+    /**
+     * Cria uma StringColorida a partir de uma String e com as cores de fonte e 
+     * de fundo passadas, também através de Strings.
+     * 
+     * @param string String sem cor a ser colorida.
+     * @param corFonte String da cor da fonte. (deve pertencer ao Enum Cor)
+     * @param corFundo String da cor do fundo. (deve pertencer ao Enum Cor)
+     * 
+     * @see cores.Cor
+     */
     public StringColorida(String string,String corFonte,String corFundo){
         this(string,Cor.valueOf(corFonte.toUpperCase()),Cor.valueOf(corFundo.toUpperCase()));
     }
     
+    
+    /**
+     * Cria uma StringColorida a partir de uma String setando a cor da fonte.
+     * 
+     * @param string String sem cor a ser colorida.
+     * @param cor String da cor a ser colocada na fonte. (deve pertencer ao
+     * Enum Cor)
+     * @param fundo se true, cor é setada no fundo e na fonte, caso contrário.
+     * 
+     * @see cores.Cor
+     */
     public StringColorida(String string,String cor, boolean fundo){
         this(string,Cor.valueOf(cor.toUpperCase()),fundo);
     }
     
+    
+    /**
+     * Cria uma nova StringColorida idêntica à esta.
+     * 
+     * 
+     * @return uma cópia completa desta StringColorida
+     * @see cores.Cor
+     */
     public StringColorida copia(){
         StringColorida res = new StringColorida(string);
         Collections.copy(res.posicoesColoridas, posicoesColoridas);
         return res;
     }
     
+    
+    /**
+     * Retorna esta String sem cores.
+     * 
+     * @return Retorna esta String sem cores
+     * 
+     * @see cores.Cor
+     */
     public String getString(){
         return string;
     }
@@ -92,7 +175,14 @@ public class StringColorida {
                 return j;
         return -1;
     }    
-    
+    /**
+     * Trata esta StringColorida como uma matriz, onde cada linha termina em com
+     * o caracter '\n' e retorna a dimensão desta matriz.
+     * 
+     * @return Retorna a altura na posição 0 e a largura na posição 1.
+     * 
+     * @see cores.Cor
+     */
     public int[] getDimensao(){
         if(largura == -1){
             String []stringQuebrada = string.split("\n");
@@ -110,6 +200,17 @@ public class StringColorida {
         return (linha)*(largura+1) + coluna;
     }
     
+    /**
+     * Retorna uma StringColorida com apenas o caracter da posição 'linha' e 
+     * 'coluna'.
+     * 
+     * @param linha linha do caracter.
+     * @param coluna ooluna do caracter.
+     * @return uma StringColorida composta apenas pelo caracter da posição
+     * 'linha' e 'coluna'.
+     * 
+     * @see cores.Cor
+     */
     public StringColorida getCharColorido(int linha, int coluna){
         
         int indice = getIndicesDasCores(linhaColunaParaReal(linha, coluna));
@@ -118,6 +219,16 @@ public class StringColorida {
                                   posicoesColoridas.get(indice).corFundo);
     }
     
+    /**
+     * Cria uma StringColorida com as mesmas dimensões desta, composta apenas
+     * por espaços em branco, coloridas com 'cor'.
+     * 
+     * @param cor cor do fundo da nova StringColorida.
+     * @return uma StringColorida com as mesmas dimensões desta, composta apenas
+     * por espaços em branco, coloridas com 'cor'.
+     * 
+     * @see cores.Cor
+     */
     public StringColorida versoDesta(String cor){
         int dimensao[] = getDimensao();
         String verso = "";
@@ -145,7 +256,14 @@ public class StringColorida {
         return res;
     }
     
-    public String toStringAllColors(){
+    /**
+     * Retorna uma String com a lista de todas as informações sobre esta
+     * StringColorida.
+     * 
+     * @return uma String com a lista de todas as informações sobre esta
+     * StringColorida.
+     */
+    public String toStringAllInfo(){
         String res = string+"\n";
         for (RangesColoridas posicoesColorida : posicoesColoridas) 
             res += posicoesColoridas;
