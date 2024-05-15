@@ -21,8 +21,8 @@ import java.util.Objects;
 public class StringColorida {
     private String string;
     private List<RangesColoridas> posicoesColoridas = new LinkedList<>();
-    private int largura;
-    private int altura;
+    private int largura = -1;
+    private int altura = -1;
 
     /**
      * Cria uma StringColorida a partir de uma String, com as cores básicas.
@@ -32,8 +32,7 @@ public class StringColorida {
     public StringColorida(String string){
         posicoesColoridas.add(new RangesColoridas(new Range(0,string.length()), Cor.BRANCO, Cor.FUNDO_PRETO));
         this.string = string;
-        largura = -1;
-        altura = -1;
+        getDimensao();
     }    
     
     /**
@@ -183,7 +182,7 @@ public class StringColorida {
      * 
      * @see cores.Cor
      */
-    public int[] getDimensao(){
+    public final int[] getDimensao(){
         if(largura == -1){
             String []stringQuebrada = string.split("\n");
             altura = stringQuebrada.length;

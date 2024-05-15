@@ -96,7 +96,7 @@ public abstract class Carta {
      * @see StringColorida
      */
     public StringColorida getVerso() {
-        return frente.copia();
+        return verso.copia();
     }
     
     /**

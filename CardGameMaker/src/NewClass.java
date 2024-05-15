@@ -4,8 +4,6 @@ import console.Tecla;
 import cores.Cor;
 import cores.StringColorida;
 import java.io.IOException;
-import java.io.PrintStream;
-import static java.nio.charset.StandardCharsets.UTF_8;
 import java.util.Arrays;
 import mecanicas.Carta;
 import mecanicas.Tabuleiro;
@@ -23,8 +21,9 @@ import mecanicas.Tabuleiro;
 class NewClass {
     public static void main(String[] args) throws IOException, InterruptedException {
         demoCores();
-//        demoCartas();
-//        demoTabuleiro();
+        demoCartas();
+        demoTabuleiro();
+        Console.saiDoPrograma();
     }
     
     public static void demoTabuleiro(){
@@ -44,7 +43,7 @@ class NewClass {
             Console.println("Atualmente está olhando para a carta ("+linha+","+coluna+").");
             atual = Console.getTecla();
             
-            if(atual == Tecla.ESC) Console.saiDoPrograma();
+            if(atual == Tecla.ESC) break;
             if(atual == Tecla.RIGHT) coluna = (coluna + 1) %tab.getTotalColunas();
             if(atual == Tecla.LEFT){
                 coluna = (coluna - 1);
@@ -92,26 +91,27 @@ class NewClass {
             Console.limpaTela();
             Console.println(as);
             Console.println(Arrays.toString(as.getFaceParaCima().getDimensao()));
+            
             atual = Console.getTecla();
             
-            if(atual == Tecla.ESC) Console.saiDoPrograma();
+            if(atual == Tecla.ESC) break;
             if(atual == Tecla.RIGHT || atual == Tecla.LEFT) as.vira();
         }
     }
     
         
     static StringColorida copas = new StringColorida("A  \n"
-                                                +" "+(char)3+" \n"
-                                                +"  A\n", "VERMELHO", "BRANCO");
+                                                    +" ♥ \n"
+                                                    +"  A\n", "VERMELHO", "BRANCO");
     static StringColorida ouros = new StringColorida("A  \n"
-                                                +" "+(char)4+" \n"
-                                                +"  A\n", "VERMELHO", "BRANCO");
+                                                    +" ♦ \n"
+                                                    +"  A\n", "VERMELHO", "BRANCO");
     static StringColorida paus = new StringColorida("A  \n"
-                                                +" "+(char)5+" \n"
-                                                +"  A\n", "PRETO", "BRANCO");
+                                                   +" ♣ \n"
+                                                   +"  A\n", "PRETO", "BRANCO");
     static StringColorida espadas = new StringColorida("A  \n"
-                                                +" "+(char)6+" \n"
-                                                +"  A\n", "PRETO", "BRANCO");
+                                                      +" ♠ \n"
+                                                      +"  A\n", "PRETO", "BRANCO");
 
     private static void demoCores() {
         Console.limpaTela();
